@@ -1,0 +1,56 @@
+<ion-view class="saveitems">
+  <ion-nav-title>My Saved Items</ion-nav-title>
+  <ion-content>
+    <section class="refine-bar item"> <span class="pull-left">viewing {{savedItem.total_items}} items...</span> <span class="pull-right">
+     
+      </span> </section>
+    <div class="item item-divider hide"> Cash America 5344 5th ave, New jersey NJ </div>
+    <ion-list>
+      <ul class="item-list-search">
+        <li class="item" ng-repeat="item in savedItem.itemList | orderObjectBy:'distance'" ">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <hgroup>
+                <h3 ng-click='redirectToStoreDetail("{{item.storeNumber}}",{{item}},"product");'>{{item.itemName}}</h3>
+                <h4>Item #: <span>{{item.longICN}}</span></h4>
+                <span class="icon-favorite active" ng-click="addRemoveFavorite($index,item);" ng-class="{active: selectedItem[$index]}"></span> </hgroup>
+              <ul ng-click='redirectToStoreDetail("{{item.storeNumber}}",{{item}},"product");'>
+                <li ng-repeat="detail in item.details track by $index"> {{detail}} </li>
+              </ul>
+              <!--Issue #110 : This piece of code is to show favorite item from clearance item list. -->
+              <div class="clearance-item" ng-model="item.isClearanceItem" ng-show="item.isClearanceItem">
+                <div class="display-table">
+                  <div class="display-row">
+                  <div class="display-cell bolder">Clearance</div>
+                  <div class="display-cell">
+                    <span>Come make<br> an offer</span>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Code Ends-->
+              <div class="panel-footer box-row" ng-class="{ noborder : (item.details.length==0) }">
+                <div class="col col-60 price relative">${{item.price}} </div>
+               
+				<span class="col text-right distance paddB0"> <i class="icon icon-location"></i> {{item.distance| number:1}} mi </span>
+			  </div>
+			  <div ng-hide="{{item.isAvailable}}" class="list-overlay">
+				<span class="close" ng-click="addRemoveFavorite($index,item);"></span>
+				<p>This item has been purchased</p>
+			  </div>
+			  
+            </div>
+          </div>
+        </li>
+      </ul>
+    </ion-list>
+    <div ng-show="savedItem.itemdata">
+    <div class="message-box">
+      <p class="location-note">Browse our inventory then save your favorites</p>    
+    </div>
+    <div class="padding">
+      <a class="button button-block btn-primary" href="#app/inventory">Browse Inventory</a>
+    </div>
+    </div>
+  </ion-content>
+</ion-view>

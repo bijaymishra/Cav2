@@ -1,0 +1,53 @@
+<ion-view hide-nav-bar="true" class="authentication">
+  <ion-header-bar align-title="center" class="bar bar-header bar-transparent">
+    <button class="button button-icon icon button-clear button back-button" ng-click="$ionicGoBack($event)"></button>
+	 <h1 class="title"><img src="images/logo-cashamerica.png" alt="CashAmerica" class="logo"></h1>
+  </ion-header-bar>
+  <ion-content class="social-signup">
+    <section class="content-wrapper signup-form">
+		 <h2 class="page-title" ng-model="name">Hi {{name}}</h2>
+      <form role="form"  name='myForm' ng-model='fbsignupForm'>
+        <div class="form-panel">
+          <div class="form-group">
+            <div class="input-group"> <span class="input-group-addon"><span class="icon icon-zipcode"></span></span>
+              <input id="id_zipcode" type="tel" ng-model='fbsignupForm.zip' required  name='zip'  class="form-control" ng-pattern="/^[0-9]{5}$/" maxlength="5"  placeholder="Zip Code" >
+            </div>
+          
+            <span ng-show="myForm.zip.$dirty && myForm.zip.$invalid"></span>
+                            <span ng-show="!myForm.zip.$error.required" class="form-control-feedback" ng-class="myForm.zip.$invalid && !myForm.zip.$pristine && 'icon-remove' || !myForm.zip.$pristine && 'icon-ok'"></span>
+
+            </div>
+          <div class="form-row toggle-btn clearfix" data-toggle="buttons">
+            <ion-toggle ng-model="fbsignupForm.emailSaving.checked"
+                            ng-init="fbsignupForm.emailSaving.checked=true"
+                            ng-checked="fbsignupForm.emailSaving.checked"> Sign up for<br>
+              email savings and updates </ion-toggle>
+          </div>
+          <div class="form-row toggle-btn clearfix" data-toggle="buttons">
+            <ion-toggle ng-change="showTermsPopup(myValue);" ng-click="showTermsPopup(myValue);" ng-model="fbsignupForm.textMsgSavings.checked"
+                            ng-checked="fbsignupForm.textMsgSavings.checked" ng-init="fbsignupForm.textMsgSavings.checked=false"> Sign up for text message <br>
+              savings and updates </ion-toggle>
+          </div>
+          <div class="form-row form-group phone_group" ng-if="fbsignupForm.textMsgSavings.checked" id="id_phone_group">
+            <label class="pull-left col col-20 small">Mobile</label>
+            <div class="input-fields-group pull-right col col-75">
+              <input type="tel" custom autofocus ng-minlength="3" name="phone1" maxlength="3" size="3" required ng-pattern="/^[0-9]{3}$/" ng-model="fbsignupForm.phonebox1" class="form-control input-small" />
+              <input type="tel" custom ng-minlength="3" name="phone2" maxlength="3" size="3" required ng-pattern="/^[0-9]{3}$/" ng-model="fbsignupForm.phonebox2" class="form-control input-small" />
+              <input type="tel" custom ng-minlength="4" name="phone3" maxlength="4" size="4" required ng-pattern="/^[0-9]{4}$/" class="form-control input-medium" ng-model="fbsignupForm.phonebox3" />
+            </div>
+            <span id="id_zip_ok" class="form-control-feedback" ng-class="(myForm.phone1.$invalid || myForm.phone2.$invalid || myForm.phone3.$invalid) && ((!myForm.phone1.$pristine || !myForm.phone2.$pristine || !myForm.phone3.$pristine)) && 'icon-remove' || ((!myForm.phone1.$pristine || !myForm.phone2.$pristine || !myForm.phone3.$pristine)) && 'icon-ok'"></span> </div>
+        </div>
+        <div class="form-footer sociallogin">
+          <div class="form-group">
+            <p> By pressing continue you agree to<br>
+              our <a href="javascript:void(0);" data-toggle="modal" ng-click="fnPolicyPopup();">Terms and Privacy policy</a>. </p>
+          </div>
+          <div class="form-group">
+            <input type="submit" ng-disabled="(myForm.phone1.$invalid || myForm.phone2.$invalid || myForm.phone3.$invalid)||(fbsignupForm.zip.$dirty && fbsignupForm.zip.$invalid||!fbsignupForm.zip)" class="btn btn-primary btn-lg btn-block"  ng-click="fbsignup();" value='Continue'>
+          </div>
+        </div>
+        <div class="modal hide" id="id_privacybox"></div>
+      </form>
+    </section>
+  </ion-content>
+</ion-view>

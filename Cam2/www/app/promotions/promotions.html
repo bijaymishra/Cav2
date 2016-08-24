@@ -1,0 +1,9 @@
+﻿<ion-view title="Special Offers" view-title="Special Offers" class="offers">
+    <ion-content class="has-header">
+        <figure class="item" ng-repeat="offers in promotions">
+            <a title="{{offers.offerID}" href="#/app/promotiondetail/{{offers.offerID}}">
+                <img ng-src="https://{{offers.imageURL}}" alt="{{offers.offerID}}">
+            </a>
+        </figure>
+    </ion-content>
+</ion-view>

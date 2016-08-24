@@ -1,0 +1,54 @@
+﻿<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-stable" ng-click="closesideMenu();">
+      <h1 class="title"><img class="logo" src="images/slidemenu-logo.png" alt="logo" /></h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list class="home_menu">
+        <!--<ion-item nav-clear menu-close ng-click="login()">
+          Login
+        </ion-item> -->
+        <ion-item nav-clear menu-close href="#/app/banner" active class="item item-icon-left activated" >
+         <span class="icon"><img src="images/nav-ico-home.png" alt="Home" /></span> Home
+        </ion-item>
+         <ion-item nav-clear menu-close href="#" ng-click="redirecttoSaveItems();" active class="item item-icon-left">
+          <span class="icon"> <img src="images/nav-ico-saveditem.png" alt="Saved Items" /></span> Saved Items
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/inventory" active class="item item-icon-left">
+           <span class="icon"><img src="images/nav-ico-inventory.png" alt="Browse Inventory" /></span> Browse Inventory
+        </ion-item>
+		 <ion-item nav-clear menu-close href="#" ng-click="redirecttoStore();" active class="item item-icon-left">
+          <span class="icon"><img src="images/nav-ico-stores.png" alt="Find Stores" /></span> Find Stores
+        </ion-item>
+		<ion-item nav-clear menu-close href="#/app/promotions" active class="item item-icon-left">
+           <span class="icon"><img src="images/nav-ico-offers.png" alt="Special Offers" /></span> Special Offers
+        </ion-item>
+		<ion-item nav-clear href="#" active ng-click="redirectToNJS();" class="item item-icon-left">
+           <span class="icon"><img src="images/nav-ico-jewelrydeal-.png" alt="Jewelry Deal of the Week" /></span> Jewelry Deal of the Week
+        </ion-item>	
+		<ion-item nav-clear href="#" active ng-click="redirectToEbay();" class="item item-icon-left">
+           <span class="icon"><img src="images/nav-ico-auction.png" alt="Ebay Online Auction" /></span> eBay<sup>&reg;</sup> Online Auction
+        </ion-item>	
+        <ion-item nav-clear menu-close href="#/app/privacy" active class="item item-icon-left privacy-link">
+           <span class="icon"><img src="images/nav-ico-privacy.png" alt="Privacy" /></span> Terms/Privacy
+        </ion-item>
+		<ion-item nav-clear menu-close href="#/app/about" active class="item item-icon-left">
+           <span class="icon"><img src="images/nav-ico-about.png" alt="About" /></span> About
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

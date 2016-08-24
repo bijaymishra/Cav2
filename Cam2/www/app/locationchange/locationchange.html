@@ -1,0 +1,38 @@
+ <div class="modal">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Change Location</h1>
+		  <span class="button-clear button close-button"  ng-click="refineChangemodal.hide();modal.hide()"></span>
+        </header>
+        <content has-header="true" padding="true" class="has-header change-location">
+         <div class="title-bar"><a href="javascript:void(0);">Enter a city and state</a> </div>
+		 
+	<form name="locationform" role="form" action="">
+      <div class="form-panel">
+        <div class="form-group">
+          <div class="input-group">
+            <input ng-model="zipcode.city" type="text" class="form-control" placeholder="City" />
+          </div>
+          </div>
+        <div class="form-group">
+          <div class="input-group"> 
+			 <select ng-model="zipcode.state"
+                    ng-options="opt as opt.name for opt in states" 
+             class="form-control select-option" ng-class="{stateselect: zipcode.state.name=='State'}"></select><!-- <option class="select-option" value="" data="">State</option><option value="Alabama" data="AL">Alabama</option><option value="Alaska" data="AK">Alaska</option><option value="Arizona" data="AZ">Arizona</option><option value="Arkansas" data="AR">Arkansas</option><option value="California" data="CA">California</option><option value="Colorado" data="CO">Colorado</option><option value="Connecticut" data="CT">Connecticut</option><option value="Delaware" data="DE">Delaware</option><option value="District Of Columbia" data="DC">District Of Columbia</option><option value="Florida" data="FL">Florida</option><option value="Georgia" data="GA">Georgia</option><option value="Hawaii" data="HI">Hawaii</option><option value="Idaho" data="ID">Idaho</option><option value="Illinois" data="IL">Illinois</option><option value="Indiana" data="IN">Indiana</option><option value="Iowa" data="IA">Iowa</option><option value="Kansas" data="KS">Kansas</option><option value="Kentucky" data="KY">Kentucky</option><option value="Louisiana" data="LA">Louisiana</option><option value="Maine" data="ME">Maine</option><option value="Maryland" data="MD">Maryland</option><option value="Massachusetts" data="MA">Massachusetts</option><option value="Michigan" data="MI">Michigan</option><option value="Minnesota" data="MN">Minnesota</option><option value="Mississippi" data="MS">Mississippi</option><option value="Missouri" data="MO">Missouri</option><option value="Montana" data="MT">Montana</option><option value="Nebraska" data="NE">Nebraska</option><option value="Nevada" data="NV">Nevada</option><option value="New Hampshire" data="NH">New Hampshire</option><option value="New Jersey" data="NJ">New Jersey</option><option value="New Mexico" data="NM">New Mexico</option><option value="New York" data="NY">New York</option><option value="North Carolina" data="NC">North Carolina</option><option value="North Dakota" data="ND">North Dakota</option><option value="Ohio" data="OH">Ohio</option><option value="Oklahoma" data="OK">Oklahoma</option><option value="Oregon" data="OR">Oregon</option><option value="Pennsylvania" data="PA">Pennsylvania</option><option value="Puerto Rico" data="PR">Puerto Rico</option><option value="Rhode Island" data="RI">Rhode Island</option><option value="South Carolina" data="SC">South Carolina</option><option value="South Dakota" data="SD">South Dakota</option><option value="Tennessee" data="TN">Tennessee</option><option value="Texas" data="TX">Texas</option><option value="Utah" data="UT">Utah</option><option value="Vermont" data="VT">Vermont</option><option value="Virginia" data="VA">Virginia</option><option value="Washington" data="WA">Washington</option><option value="West Virginia" data="WV">West Virginia</option><option value="Wisconsin" data="WI">Wisconsin</option><option value="Wyoming" data="WY">Wyoming</option> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <p>Or a zip code</p>
+          <div class="input-group">
+            <input name="zipcode" ng-model="zipcode.code" ng-pattern="/^[0-9]{5}$/" maxlength="5" type="tel"  class="form-control" placeholder="Zip Code"/>
+          </div>
+        </div>
+      </div>
+      <div class="form-footer">
+         <div class="btn-block-row"><a href="javascript:void(0)" ng-click="updatelocation();" class="btn btn-primary btn-lg btn-block" ng-disabled="(locationform.$invalid || locationform.$pristine)|| (!((!!zipcode.city && zipcode.state.name != 'State')  || !(zipcode.code.$dirty && zipcode.code.$invalid || !zipcode.code) )) ">Update</a></div>
+        
+        <div class="btn-block-row"> <a ng-click="usemylocation();" href="javascript:void(0)" class="btn button-red btn-lg btn-block"> <span class="icon icon-current-location"></span> Use current location</a> </div>
+      </div>
+    </form>
+	
+        </content>
+      </div>

@@ -1,0 +1,57 @@
+﻿<ion-view view-title="Find Stores" title="Find Stores">
+    <ion-content class="store-list">
+        <section class="near-you-bar tabhead">
+            <div class="tabs tabs-icon-left">
+                <a class="tab-item tab-item-active" ng-class="{active: !storeobj.isFav}" ng-click="fntabNear();" href="javascript:void(0)">
+                    <i class="icon icon-location-grey"></i>
+                    <span class="ellipsis">Near <span ng-show="zipcode.code=='' && zipcode.city=='' ">You</span><span ng-show="zipcode.code!=''">{{zipcode.code}}</span><span ng-show="zipcode.city!=''">{{zipcode.city}}</span><span ng-show="zipcode.state.abbreviation!='' && zipcode.city!=''">{{','+zipcode.state.abbreviation}}</span></span>
+                </a>
+                <a class="tab-item" ng-class="{active: storeobj.isFav}" ng-click="fntabFav()">
+                    <span class="seperator"></span>
+                    <i class="icon icon-star-grey"></i>
+                    Favorite Stores
+                </a>
+            </div>
+        </section>
+        <ul class="item-list-search">
+            <li class="item" ng-repeat="store in storeobj.stores | orderObjectBy:'distance'">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <span class="distance"><i class="icon icon-location"></i>{{store.distance | number:1}} mi</span>
+                        <h3 ng-click='redirectToStoreDetail1("{{store.storeNumber}}","product");'>{{store.brand}}</h3>
+                        <address ng-if="!store.address.address2" ng-click='redirectToStoreDetail1("{{store.storeNumber}}","product");'>
+                            {{store.address.address1}}  {{store.address.address2}} <br> {{store.address.city}} {{store.address.state}}
+                        </address>
+                        <address ng-if="store.address.address2" ng-click='redirectToStoreDetail1("{{store.storeNumber}}","product");'>
+                            {{store.address.address1}} <br> {{store.address.city}} {{store.address.state}}
+                        </address>
+                        <span class="icon-right btn-fav button-clear" ng-click="addRemoveFavorite($index,store);">{{ storeobj.selectedItem[$index] ?  'Remove from favorites': 'Add to favorites'}}<span class="icon-favorite" ng-class="{'active': storeobj.selectedItem[$index]}"></span></span>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+        <div ng-show="storeobj.storedata" ng-class="storeobj.storedata ? 'visible' : 'invisible'" class="invisible">
+            <article class="not-found"><div class="location"><img src="images/location.png" alt=" "> </div><p class="location-note">Hmmm, we're not showing anything near this address. Please retry your search.</p></article>
+        </div>
+        <div ng-show="storeobj.stores.length==0 && storeobj.isFav">
+            <article class="not-found">
+                <div class="location invisible"><img src="images/location.png" alt=" "> </div>
+                <p class="location-note msg-favstore">
+                    You haven’t added any favorite<br />
+                    stores.
+                </p>
+            </article>
+        </div>
+        <div ng-show="storeobj.badlocation">
+                <article class="not-found">
+                    <div class="location"><img src="images/location.png" alt=" "> </div><p class="location-note">
+                       Please check the location.<br /> We can’t find it.
+                    </p>
+                </article>
+            </div>
+        <ion-infinite-scroll icon="none" ng-if="!storeobj.noMoreStoreAvailable" on-infinite="loadMoreStore()" distance="2%">
+        </ion-infinite-scroll>
+    </ion-content>
+    <ng-include ='app/locationchange/locationchange.html'>
+</ion-view>

@@ -1,0 +1,65 @@
+﻿<ion-view class="home-page" hide-nav-bar="true">
+	<!-- home - Header with search bar -->	
+	<ion-header-bar align-title="center" class="bar bar-stable bar-header home-header">
+      <div class="buttons buttons-left header-item">
+		  <span class="left-buttons">
+			 <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+		  </span>
+	  </div>
+      <div class="title">
+         <div class="home-search">
+            <div class="global-search-bar" ng-model="search" >
+				<input ng-change="search()" ng-model="data.search" type="search" placeholder="Search our inventory..." ng-blur="CloseSearch();" ng-keyup="keyPress($event.keyCode,data.search);" maxlength="30" ng-click="search();" reset-field>
+				<button ng-click="searchGlobal({{'data.search'}});" class="button-search"><span></span></button>
+            </div>
+         </div>
+      </div>
+   </ion-header-bar>
+	<!-- home - search suggest box -->
+	<ion-content ng-show="SearchOn" class="home">	
+		<div class="card padding" ng-show="data.recentdata.length==0">
+			<p class="recent_title">Search from hundreds of thousands of items!</p>
+		</div>
+		<div class="list">
+			<div class="item item-divider recent_title  recent_data" ng-show="data.recentdata.length>0">Recent</div>
+			<ion-item class="item recent_data" ng-click="searchGlobal({{'recentdata.name'}});" ng-repeat="recentdata in data.recentdata">{{recentdata.name}}</ion-item>
+		</div>
+	</ion-content>
+	<!-- home - Content -->
+	<ion-content ng-show="!SearchOn" class="home">	
+	<!-- home - slider -->
+		<ion-slide-box ng-if="banners" auto-play="true" selected="activeSearchSlide" does-continue="true">
+			<ion-slide ng-repeat="banner in banners track by $index" dynamic-slides="banners">
+			<ion-spinner class="spinner-center"></ion-spinner>
+				   <img ng-show = "showSlider" ng-click='redirectToPromoDetail("{{banner.offerID}}","home");' ng-src='https://{{banner.imageURL}}' alt="Banner" imageonload />
+				</ion-slide>			
+		</ion-slide-box>	
+		<section class="nearest-store">
+			<a href="javascript:void(0);" ng-click="redirecttostores();" class="button-clear">
+				<i class="icon icon-location-pointer"></i> Find Nearest Store
+		   </a>
+		</section>
+		<section class="external-link">
+			<div class="button-bar">
+			  <a class="button" ng-click="redirectToEbay();">eBay<sup>&reg;</sup> Auctions</a>
+			  <a class="button" ng-click="redirectToNJS();">Weekly Deal</a>
+			</div>
+		</section>
+		<!-- home - Popullar category -->
+		<section class="popular-category">			
+			<div class="shortcut-btn-list clearfix">
+				<div class="item-category-btn col-33 popcat-1">
+					<div ng-click="catClearanceDetail('clearance')">  <figure><img src="images/icons/pop-category/cat-clearance.png" alt="Clearance"></figure>
+  						<p class="ellipsis ng-binding">Clearance</p>
+					</div>
+				</div>
+				<div ng-repeat="item in topCategory" class='item-category-btn col-33'>
+					<div ng-click="categoryDetail(item.categoryCode,item.categoryName)" ><figure><img ng-src='images/icons/pop-category/{{item.categoryCode}}.png' alt="category" /></figure>
+					<p class="ellipsis">{{item.categoryName}}</p>
+					</div>					
+				</div>				
+			</div>			
+		</section>
+		<h3 class="btn-all-category"><a class="btn-primary btn" href="#/app/inventory">Browse All Categories</a></h3>
+    </ion-content>
+</ion-view>

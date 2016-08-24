@@ -1,0 +1,89 @@
+﻿<ion-view ng-controller="storeDetailController as vm">
+<ion-nav-title>{{storeDetail.address.address1}}</ion-nav-title>
+     <ion-content class="store-result">
+        <section class="store-result">
+            <div class="panel-title">
+                <h3>Visit Store</h3>
+            </div>
+            <article class="wrap">
+                <div class="panel" ng-click="getdirectionPopup();">
+                    <div class="panel-row">
+                        <span class="panel-icon"><img src="images/icon-store-direction.png" alt="store direction"></span>
+                        <address id="id_store_address">
+                            {{storeDetail.address.address1}} {{storeDetail.address.address2}}</br>
+                            {{storeDetail.address.city}}, {{storeDetail.address.state}} {{storeDetail.address.zipCode}}
+                        </address>
+                    </div>
+                </div>
+            </article>
+            <div class="panel-title">
+                <h3>Store Hours</h3>
+            </div>
+            <article class="wrap">
+                <div class="panel">
+                    <ul class="days-time" id="id_store_hours">
+                    <li ng-repeat="weeklyHours in storeDetail.weeklyHours" ng-click="changeDay($index)">
+                        <a ng-class="{ active : weeklyHours.isToday }">{{weeklyHours.weekDay | limitTo: 3 }}</a>
+                    </li>
+                        <!-- <li><a href="javascript:void(0)" title="sunday" class="active">SUN</a></li>
+                        <li><a href="javascript:void(0)" title="monday">MON</a></li>
+                        <li><a href="javascript:void(0)" title="tuesday">TUE</a></li>
+                        <li><a href="javascript:void(0)" title="wednesday">WED</a></li>
+                        <li><a href="javascript:void(0)" title="thursday">THU</a></li>
+                        <li><a href="javascript:void(0)" title="friday">FRI</a></li>
+                        <li><a href="javascript:void(0)" title="saturday">SAT</a></li> -->
+                    </ul>
+                    <div class="start-close box-row">
+                        <div class="start-close-left  col"> <span>OPEN</span> <span>{{start_time}}</span> </div>
+                        <div class="start-close-right col"> <span>CLOSE</span> <span>{{close_time}}</span> </div>
+                    </div>
+                </div>
+            </article>
+            <div id="id_con_panel" class="panel-title">
+                <h3>Contact</h3>
+            </div>
+            <article  class="wrap">
+                <a>
+                    <div class="panel">
+                        <div class="panel-row contactpanel">
+                            <a href="tel:{{storeDetail.phone}}"><span ng-show="fromflag" class="panel-icon"><img src="images/icon-contact.png" alt="store contact"></span>
+                            <span ng-show="fromflag"class="contact-number">{{storeDetail.phone | phonenumber}}</span></a>
+                            <span ng-hide="fromflag"class="contact-number">Because our unique inventory changes nearly real time, come visit our store to inquire about this item</span>
+                            </address>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            <div class="panel-title">
+                <h3>Services</h3>
+            </div>
+            <article class="wrap">
+                <div class="panel panel-service">
+                    <div class="panel-row">
+                        <ul id="id_servies">
+                            <!--service -->
+                            <li ng-repeat="services in storeDetail.services">
+                            {{services}}
+                            </li>
+                        </ul>
+                        <hr ng-show="storeDetail.licenses.length > 0" >
+                        <ul id="id_license">
+                            <li ng-repeat="license in storeDetail.licenses">
+                                {{license.businessEntity}}
+                                {{license.licenseType}}
+                                {{license.licenseNumber}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+            <div class="overlay"></div>
+            <div id="id_nav_direction" class="share-popup hide">
+                <div class="share-address" id="id_direction_address"> </div>
+                <div class="email-btn"> <a onclick="app.fndirection();" class="btn btn-secondary btn-lg btn-block" href="javascript:void(0);">Get Directions</a> </div>
+                <div class="share-footer"><a href="javascript:void(0);" onclick="app.fnclosenav();">Cancel</a></div>
+            </div>
+        </section>
+
+    </ion-content>
+</ion-view>

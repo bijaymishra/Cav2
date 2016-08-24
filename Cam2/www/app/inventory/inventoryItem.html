@@ -1,0 +1,24 @@
+<ion-view view-title={{itemcategoryName}} title="Inventory">
+    <ion-content class="inventory">
+		<div class="search-bar">
+			<div class="item-input-wrapper item-input-inset">
+				<span class="search-field">
+					<input ng-model="inventry_search" type="search" placeholder="Search in {{itemcategoryName}}" maxlength="30" ng-keyup="keyPress($event.keyCode,inventry_search);" reset-field>
+				</span>
+			   <span class="search-txt-remove hide" id="id_search_remove"><i class="icon icon-remove-search"></i></span>
+				<button ng-click="searchGlobal({{'inventry_search'}});" class="button-clear button-grey"><span class="icon icon-search placeholder-icon"></span></button>
+			</div>
+		</div>
+		<ion-list>		 
+			<ion-item ng-show="flag" class="item-stable item-thumbnail-left" ng-click="categoryDetail(itemcategoryCode,itemcategoryName)">
+                     <img ng-src='images/icons/main-category/{{itemcategoryCode}}.png' alt='category' />
+                    {{"All " + itemcategoryName}}
+                </ion-item>           
+                <ion-item class="item-stable item-thumbnail-left" ng-repeat="product in products | filter:{parentID:itemcategoryCode}"
+                          ng-click="categoryDetail(product.categoryCode,product.categoryName)">
+                    <img ng-src='images/icons/{{product.categoryCode}}.png' alt='category' />
+                    {{product.categoryName}}
+                </ion-item>
+        </ion-list>		
+    </ion-content>
+</ion-view>

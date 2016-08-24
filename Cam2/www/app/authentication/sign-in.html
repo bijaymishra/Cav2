@@ -1,0 +1,30 @@
+<ion-view hide-nav-bar="true" class="authentication">
+  <ion-header-bar align-title="center" class="bar bar-header bar-transparent">
+    <button class="button button-icon icon button-clear button back-button" ng-click="$ionicGoBack($event)"></button>
+    <h1 class="title"><img src="images/logo-cashamerica.png" alt="CashAmerica" class="logo"></h1>
+  </ion-header-bar>
+  <ion-content>
+    <section class="content-wrapper loginform">
+	  <h2 class="page-title">Sign In</h2>
+      <form role="form" name = "formSignIn">
+        <div class="form-group">
+          <div class="input-group"> <span class="input-group-addon"><span class="icon email-icon"></span></span>
+            <input id="id_signin_email" ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/" name="emailField" type="email" ng-model = "email" required class="form-control" placeholder="Email Address" ng-keyup="keyPress($event.keyCode,email);">
+          </div>
+          <!--span id="id_name_ok" class="form-control-feedback" ng-class="formSignIn.$invalid && 'icon-remove' || 'icon-ok'"></span><p class="msg-error" id="sign_in_error" ng-show="loginError">Hmmm, we didn't find your email.</p--> 
+          <span ng-show="!formSignIn.emailField.$error.required" id="id_name_ok" class="form-control-feedback" ng-class="formSignIn.$invalid && !formSignIn.$pristine && 'icon-remove' || !formSignIn.$pristine && 'icon-ok'"></span><p class="msg-error invisible" ng-class="loginError ? 'visible' : 'invisible'" ng-show="loginError">Hmmm, we didn't find your email.</p>
+        </div>
+        <div class="login-btn-row">
+          <button id='id_signin_btn' class="btn btn-primary btn-lg btn-block" ng-disabled="formSignIn.$invalid" ng-click="fnSignAll(email)" type="button">Sign in</button>
+        </div>
+        <div class="box-row">
+          <div class="col"><span></span></div>
+          <div class="login-seperator-text">or</div>
+          <div class="col"><span></span></div>
+        </div>
+        <div ng-click="fnConnectFB();" class="login-btn-row"> <a class="btn button-facebook btn-lg btn-block" href="javascript:void(0);"> <span class="icon iconfb"> <img src="images/icon-fb.png" alt="Facebook"> </span> Connect with Facebook </a> </div>
+        <div class="login-btn-row"> <a class="btn button-red btn-lg btn-block" href="#/signup">Sign Up</a> </div>
+      </form>
+    </section>
+  </ion-content>
+</ion-view>

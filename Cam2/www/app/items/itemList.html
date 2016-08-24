@@ -1,0 +1,126 @@
+﻿<ion-view>
+    <ion-nav-title>{{title}}</ion-nav-title>
+    <ion-content "overflow-scroll = true">
+        <div class="search-bar" ng-if = "ItemListGlobals.topClearanceItem != 'clearance'" ng-class="ItemListGlobals.topClearanceItem == 'clearance' ? 'hide' : 'visible'">
+            <div class="item-input-wrapper item-input-inset">
+                <span class="search-field">
+                    <input ng-disabled="searchContents.is_undo && searchContents.is_global" ng-model="content.search_cat" type="search" placeholder="Search {{content.categoryname}}" maxlength="30" ng-keyup="keyPress($event.keyCode,content.search_cat);" reset-field>
+                </span>
+                <span class="search-txt-remove hide" id="id_search_remove"><i class="icon icon-remove-search"></i></span>
+
+                <button ng-hide="searchContents.is_undo && searchContents.is_global" ng-click="searchLocal({{'content.search_cat'}});" ng-class = "{'disabled':content.search_cat.length == 0}" class="button-clear button-grey"><span class="icon icon-search placeholder-icon"></span></button>
+
+                <button ng-show="searchContents.is_undo && searchContents.is_global" ng-class="searchContents.is_undo && searchContents.is_global ? 'visible' : 'invisible'" ng-click="undoSearch();" class="button-clear undo_btn invisible"><span class="icon undo-search">Undo</span></button>
+            </div>
+        </div>
+        <div class="in-store-pick"><img src="images/banner-in-store-pick-up.jpg" alt="In-Store Pick up only"></div>
+        <section class="near-you-bar tabhead">
+            <div class="tabs tabs-icon-left">
+                <a class="tab-item" ng-class="{active: !ItemListGlobals.isFav}" ng-click="fntabNear();" href="javascript:void(0)">
+                    <i class="icon icon-location-grey"></i>
+                    <span class="ellipsis">Near <span ng-show="zipcode.code=='' && zipcode.city=='' ">You</span><span ng-show="zipcode.code!=''">{{zipcode.code}}</span><span ng-show="zipcode.city!=''">{{zipcode.city}}</span><span ng-show="zipcode.state.abbreviation!='' && zipcode.city!=''">{{','+zipcode.state.abbreviation}}</span></span>
+                </a>
+                <a class="tab-item" ng-class="{active: ItemListGlobals.isFav}" ng-click="fntabFav()">
+                    <span class="seperator"></span>
+                    <i class="icon icon-star-grey"></i>
+                    Favorite Store Items
+                </a>
+            </div>
+        </section>
+        <section class="refine-bar item">
+            <span class="pull-left">viewing {{ItemListGlobals.total_items}} items...</span>
+
+            <span class="pull-right" ng-show="!ItemListGlobals.isFav"><button class="button button-small button-calm" ng-click="refinepop()">{{refineScreenGlobals.refineText}}</button></span>
+            <span class="pull-right btn-clear-refine" ng-if="refineScreenGlobals.refined && !ItemListGlobals.isFav" ng-click="resetRefine();">
+                <a class="button-icon ion-ios-close"></a>
+           </span>
+
+        </section>
+
+        <ion-list>
+            <ul class="item-list-search">
+               <!--  <li>
+                    <div class="item item-divider distance-group">
+                        <i class="icon icon-location"></i> {{distance| number:1}} miles away
+                    </div>
+                </li> -->
+                <li class="item" ng-repeat="item in itemList">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <hgroup>
+                                <h3 ng-click='redirectToStoreDetail("{{item.storeNumber}}",{{item}},"product");'>{{item.itemName}}</h3>
+                                <h4>Item #: <span>{{item.longICN}}</span></h4>
+                                <span class="distance"><i class="icon icon-location"></i>{{item.distance| number:1}} mi</span>
+                                <span class="icon-favorite" ng-click="addRemoveFavorite(item);" ng-class="{active: ItemListGlobals.selectedItem[item.longICN]}"></span>
+                            </hgroup>
+                            <ul ng-click='redirectToStoreDetail("{{item.storeNumber}}",{{item}},"product");'>
+                                <li ng-repeat="detail in item.details track by $index">
+                                    {{detail}}
+                                </li>
+                            </ul>
+                            <div class="clearance-item" ng-model="item.isClearanceItem" ng-show="item.isClearanceItem"  ng-click='redirectToStoreDetail("{{item.storeNumber}}",{{item}},"product");'>
+								<div class="display-table">
+									<div class="display-row">
+									<div class="display-cell bolder">Clearance</div>
+									<div class="display-cell">
+										<span>Come make<br> an offer</span>
+									</div>
+									</div>
+								</div>
+							</div>
+                            <div class="panel-footer box-row" ng-class="{ noborder : (item.details.length==0) }"  ng-click='redirectToStoreDetail("{{item.storeNumber}}",{{item}},"product");'>
+                                <div class="col col-60 price relative">
+                                    ${{item.price}}
+                                </div>
+                               <!--<span class="col text-right paddB0">
+ <a href="#" ng-click='redirectToStoreDetail("{{item.storeNumber}}",{{item}},"product");'>View store info</a>
+</span> --> 
+<span class="col text-right distance paddB0"> <i class="icon icon-location"></i> {{item.distance| number:1}} mi </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div ng-show="ItemListGlobals.itemdata && !ItemListGlobals.isFav" ng-class="ItemListGlobals.itemdata && !ItemListGlobals.isFav ? 'visible' : 'invisible'">
+                <article class="not-found item-message">
+                    <div class="location" ng-class="{'invisible':!searchContents.is_global || searchContents.is_undo}"><img src="images/location.png" alt=" "> </div><p class="location-note">Hmmm, it doesn&#39;t look like we  
+have any  <span ng-show="!refineScreenGlobals.refined">items nearby.</span><span ng-if="refineScreenGlobals.refined">items within {{datatoRefine.range}} miles.</span> </p>
+                    <div ng-show="!searchContents.is_global || searchContents.is_undo" class="panel-body">
+                        <a class="button button-block btn-primary" ng-click="redirecttoEbay();" href="javascript:void(0);">Search our eBay<sup>&reg;</sup> Stores</a>
+                    </div>
+
+                </article>
+            </div>
+            <div ng-show="favStoreitems.length==0 && ItemListGlobals.isFav" ng-class="favStoreitems.length==0 && ItemListGlobals.isFav ? 'visible' : 'invisible'">
+                <article class="not-found item-message">
+                    <div class="location" ng-class="{'invisible':!searchContents.is_global || searchContents.is_undo}"><img src="images/location.png" alt=" "> </div><p class="location-note">Hmmm, it doesn&#39;t look like we  
+have any items nearby.</p>
+                   
+
+                </article>
+            </div>
+            <div ng-show="ItemListGlobals.storeids.length==0 && ItemListGlobals.isFav" ng-class="ItemListGlobals.storeids.length==0 && ItemListGlobals.isFav ? 'visible' : 'invisible'">
+                <article class="not-found item-message">
+                   <div class="message-box">
+                              <p class="location-note">Choose favorite stores to display inventory</p>    
+                            </div>
+                            <div class="padding">
+                              <a class="button button-block btn-primary" href="#app/stores">View Stores List</a>
+                            </div>
+                </article>
+            </div>
+            <div ng-show="ItemListGlobals.storeids" ng-class="ItemListGlobals.badlocation ? 'visible' : 'invisible'">
+                <article class="not-found item-message">
+                    <div class="location"><img src="images/location.png" alt=" "> </div><p class="location-note">
+                       Please check the location.<br /> We can’t find it.
+                    </p>
+                </article>
+            </div>
+            <ion-infinite-scroll icon="none" ng-if="!ItemListGlobals.noMoreItemAvailable" on-infinite="loadMoreItems()" distance="5%">
+            </ion-infinite-scroll>
+        </ion-list>
+
+
+    </ion-content>
+</ion-view>

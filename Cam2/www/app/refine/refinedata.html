@@ -1,0 +1,102 @@
+<div class="modal">
+        <header class="bar bar-header bar-positive">
+			  <h1 class="title">Refine</h1>	
+              <button class="button button-icon icon button-clear button close-button" ng-click="refineModal.hide();closeModal();"></button>
+        </header>
+        <ion-content has-header="true" padding="true" class="has-header refine-panel">
+			
+	        <form name="$parent.dataRefine" role="form" ng-submit="refineApply();">
+			 <div class="search-bar hide">
+				<div class="item-input-wrapper item-input-inset">
+					<span class="search-field">
+						<input ng-model="datatoRefine.refineSearch" type="search" placeholder="Type to search for an item..." maxlength="30" reset-field>
+					</span>
+				   <span class="search-txt-remove hide"><i class="icon icon-remove-search"></i></span>
+				</div>
+			</div>
+			<section class="content-wrapper">
+				<div class="panel" ng-class="{'invisible':!collapse}">
+					 <div class="item">
+						<label class="item-input form-label block item-stacked-label">
+							Price   
+						</label>
+						<div class="row padd0">
+						  <div class="col col-25 padd0 "><input type="number" pattern="\d*" name="input" class="form-control input-lg" ng-model="datatoRefine.minPrice" placeholder="Min" ng-minlength="1" ng-maxlength="6"  min="0" max="100000" ng-class="{'red':dataRefine.input.$invalid}" /></div>
+
+						  <div class="col col-20 text-center"><span class="form-label">to</span></div>
+						  <div class="col col-25 padd0"> <input type="number" pattern="\d*" name="input2" class="form-control input-lg" ng-model="datatoRefine.maxPrice" placeholder="Max" ng-minlength="1" ng-maxlength="6" min="1" max="100000" ng-class="{'red':dataRefine.input2.$invalid}" /></div>
+					   </div>
+					   <small class="refineerror" ng-show="dataRefine.input.$invalid" >Min Price $0 - $100,000! </small>
+					   <small class="refineerror" ng-show="dataRefine.input2.$invalid"> Max Price $1 - $100,000!</small>
+					   <small class="refineerror" ng-show="isMinMaxInvalid()">Min price should not exceed Max price!</small>
+					  
+					  </div>
+						<ion-toggle class="refine_toggle"  ng-model="datatoRefine.clearanceFlag" ng-disabled="{{ItemListGlobals.topClearanceItem == 'clearance'}}" ng-checked = "datatoRefine.clearanceFlag" ng-change="doClear(datatoRefine.clearanceFlag)" >Show Clearance Items Only</ion-toggle>		  
+
+					  <div class="item">
+						<label class="block form-label">Search Radius <span>{{datatoRefine.range}} miles</span></label>
+						<!--<ion-item >
+							<input type="range" ng-model="datatoRefine.range" value="0" min="5" max="400" step="0.1">
+						</ion-item>	-->
+					<div class="item range range-positive">
+						<input type="range" ng-model="datatoRefine.range" name="volume" min="5" max="400" value="0" step="5">
+					</div>
+					  </div>				  
+					  <div class="item clearfix location-change">
+						<label class="item-input pull-left item-stacked-label">
+							<span class="form-label">Location</span>
+							<span class="block cur-location"><i class="icon icon-location"></i> <span ng-show="zipcode.code=='' && zipcode.city=='' ">Current Location</span><span ng-show="zipcode.code!=''">{{zipcode.code}}</span><span ng-show="zipcode.city!=''">{{zipcode.city}}</span><span ng-show="zipcode.state.abbreviation!='' && zipcode.city!=''">{{','+zipcode.state.abbreviation}}</span></span>
+						</label>
+						  <div class="pull-right"><span class="button button-calm" ng-click="refineChangeLocationOpen();">Change</span></div>
+					  </div>					  
+				</div>
+			 
+            <div class="category-dropdown" ng-class="{'movetotop':!collapse}">
+			
+			<!--<label class="item item-input item-select">
+				<div class="input-label">
+				  Categories
+				</div>
+				<select>
+				  <option>opiton1</option>
+				  <option selected>opiton2</option>
+				  <option>opiton3</option>
+				</select>
+			  </label> 
+			  -->
+				<div class="item item-input" ng-click="updatCount();collapse = !collapse">
+					<span class="input-label">
+					  Categories <span>({{refineScreenGlobals.refineCount}})</span>
+					</span>
+					<span class="icon-select pull-right"></span>
+				</div>
+				<ul class="list" ng-hide='collapse'>
+					<li ng-show = "{{!mainProduct.parentId}}" class="item item-checkbox" ng-repeat="mainProduct in mainProducts">
+						 {{mainProduct.categoryName}}
+						 <label class="checkbox checkbox-balanced">
+						 <input type="checkbox" class="pull-right" value="{{mainProduct.categoryCode}}" check-list='refineScreenGlobals.selection'/>
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						 </label>
+					  </li>
+					  <li ng-show = "{{refineScreenGlobals.refineCount == 1}}" ng-repeat = "singleProduct in singleProducts |filter:{categoryCode: content.categoryId}" class="item item-checkbox">
+						 {{singleProduct.categoryName}} 
+						 <label class="checkbox checkbox-balanced">
+						 <input type="checkbox" ng-disabled="{{refineScreenGlobals.refineCount == 1}}" value="{{singleProduct.categoryCode}}" class="pull-right" check-list='refineScreenGlobals.selection'/>
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						 </label>
+					  </li>
+				 </ul>				 
+            </div>
+            </section>
+            <div class="form-footer bar bar-footer"  ng-class="{'invisible':!collapse}">
+			<button class="button btn-primary button-block" type="submit" ng-disabled = "isMinMaxInvalid()||dataRefine.$invalid">Apply</button><br>
+		</div>
+			
+        </form>       
+	
+        </ion-content>
+		      </div>

@@ -1,0 +1,64 @@
+﻿<ion-view>
+<ion-nav-title>{{offerDetail.offerTitle}}</ion-nav-title>
+<ion-nav-buttons side="right">
+   <span class="button-clear button share-button" ng-click="showActionsheet()"></span>
+ </ion-nav-buttons>
+
+    <ion-content class="special-offer">
+
+        <div class="special-offer-banner">
+            <img id="id_spl_banner" ng-src="https://{{offerDetail.bigImageURL}}" alt="Banner offer 2">
+        </div>
+        <div class="item panel-body">
+            <h3 ng-model="offertitle">{{offerDetail.offerTitle}}</h3>
+            <p class="offer-details" ng-bind-html="offerDetail.description">
+                
+            </p>
+            <div class="btn-row" ng-show="offerDetail.linkURL">
+                <a href="javascript:void(0);" ng-click="fnopenWebsite();" class="btn btn-primary btn-lg btn-block">Visit website</a>
+            </div>
+            <div class="barcode-wrap" ng-show="offerDetail.offerCode && offerDetail.barcode">
+                <div id="id_barcode_div" class="barcode-body">
+                    <img id="id_barcodeimg" class="barcode" alt="Barcode" ng-src="https://{{offerDetail.barcode}}" ng-show="offerDetail.barcode">
+                    <p id="id_barcode" ng-show="offerDetail.offerCode"><strong>CODE:</strong>{{offerDetail.offerCode}}</p>
+                </div>
+            </div>
+           <div class="terms-row" ng-show="offerDetail.hasTerms">
+                <button ng-click="getPromotionTerms()" class="btn btn-default btn-lg btn-block">See Terms</button>
+            </div>
+        </div>
+
+        <div class="overlay"></div>
+        <div id="id_nav_popup" class="share-popup hide">
+            <div class="share-title">Share</div>
+            <div class="email-btn">
+                <a onclick="app.fnEmailShare();" href="javascript:void(0);" id="id_email_share" class="btn btn-secondary btn-lg btn-block"><i class="email-icon"></i>Email</a>
+            </div>
+            <div class="share-footer">
+                <a onclick="app.fnclosenav();" href="javascript:void(0);">Cancel</a>
+            </div>
+        </div>
+        <div class="modal hide" id="offertermsModal">
+            <div class="modal-body">
+                <p id="id_offer_terms_desc">
+                    I authorize Cash America International, Inc., its agents and affiliates, ("Cash America") to send me text messages,
+                    including marketing text messages, to the mobile telephone number I have provided using an automatic telephone dialing system. My consent to
+                    receive text messages on my mobile phone is not required to receive credit or other services from Cash America. I understand that any text messages
+                    Cash America sends to me may be accessed by anyone with access to my text messages. I also understand that my mobile telephone service provider's
+                    standard messaging and data rates apply to text messages received from Cash America, Cash America shall have no liability for any charges related
+                    to text messages Cash America sends to me, and I am solely responsible for any charges. I agree to notify Cash America if I change mobile telephone
+                    numbers or provide my mobile telephone number to another person. I may withdraw my consent to receive text messages, including marketing text messages,
+                    at any time by selecting the "opt-out" button on any such text message received or by sending "STOP," "END" or "QUIT" in reply to the text message
+                    I have received.
+                </p>
+                <p>&nbsp;</p>
+            </div>
+            <div class="modal-footer box-row">
+                <a class="link-primary col" href="javascript:void(0);" onclick="$.fancybox.close();">Close</a>
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+    </ion-content>
+</ion-view>

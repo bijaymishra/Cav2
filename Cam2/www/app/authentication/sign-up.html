@@ -1,0 +1,77 @@
+﻿<ion-view hide-nav-bar="true" class="authentication">
+  <ion-header-bar align-title="center" class="bar bar-header bar-transparent">
+    <button class="button button-icon icon button-clear button back-button" ng-click="$ionicGoBack($event)"></button>
+     <h1 class="title"><img src="images/logo-cashamerica.png" alt="CashAmerica" class="logo" /></h1>
+  </ion-header-bar>
+  <ion-content>
+    <section class="signup-form">
+		<h2 class="page-title">Sign Up</h2>
+      <form role="form"  name='myForm' ng-model='signupForm'>
+        <div class="form-panel">
+          <div class="form-group">
+            <div class="input-group"> <span class="input-group-addon"><span class="icon user-icon"></span></span>
+              <input id="id_full_name"  ng-pattern='/^[a-z A-Z 0-9]{1,70}$/' type="text" name="userName" ng-model="signupForm.userName" required  class="form-control" placeholder="Full name" >
+            </div>
+            <span ng-show="!myForm.userName.$error.required" class="form-control-feedback" ng-class="myForm.userName.$invalid && !myForm.userName.$pristine &&'icon-remove' || !myForm.userName.$pristine && 'icon-ok'"></span></div>
+          <div class="form-group">
+            <div class="input-group"> <span class="input-group-addon"><span class="icon email-icon"></span></span>
+              <input id="id_contact_email" ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/" type="email" name="email" ng-model="signupForm.email" required class="form-control"  placeholder="Email Address">
+            </div>
+            <span ng-show="signupForm.email.$dirty && signupForm.email.$invalid"> </span> <span ng-show="!myForm.email.$error.required" class="form-control-feedback" ng-class="myForm.email.$invalid && !myForm.email.$pristine && 'icon-remove' || !myForm.email.$pristine && 'icon-ok'"></span> </div>
+            <div class="form-group">
+            <div class="input-group"> <span class="input-group-addon"><span class="icon icon-zipcode"></span></span>
+              <input id="id_zipcode" type="tel" ng-model='signupForm.zip' maxlength="5" required  name='zip'  class="form-control" ng-pattern="/^[0-9]{5}$/" placeholder="Zip Code" >
+            </div>
+            <span ng-show="myForm.zip.$dirty && myForm.zip.$invalid"></span>
+                            <span ng-show="!myForm.zip.$error.required" class="form-control-feedback" ng-class="myForm.zip.$invalid && !myForm.zip.$pristine && 'icon-remove' || !myForm.zip.$pristine && 'icon-ok'"></span>
+            </div>
+          <div class="form-group">
+            <div class="input-group"> <span class="input-group-addon"><span class="icon age-icon"></span></span>
+              <input id="id_age" ng-model="signupForm.age" type="tel" maxlength="2" ng-pattern="/^[0-9]{2}$/" class="form-control" placeholder="Age (optional)">
+            </div>
+          </div>
+          <div class="btn-group" data-toggle="buttons">
+            <div class="register-switch">
+              <input type="radio" name="sex" ng-model="signupForm.gender" value="M" id="sex_m" ng-click="fngetGender()" class="register-switch-input">
+              <label for="sex_m" class="register-switch-label switch-left"><span class="icon icon-male"></span> Male</label>
+              <input type="radio" name="sex" ng-model="signupForm.gender" value="F" id="sex_f" ng-click="fngetGender()" class="register-switch-input">
+              <label for="sex_f" class="register-switch-label switch-right"><span class="icon icon-female"></span> Female</label>
+              <!--tt>gender = {{gender.value}}</tt><br/--> 
+            </div>
+          </div>
+          <div class="form-row toggle-btn clearfix" data-toggle="buttons">
+            <ion-toggle ng-model="signupForm.emailSaving.checked"
+                            ng-init="signupForm.emailSaving.checked=true"
+                            ng-checked="signupForm.emailSaving.checked"> Sign up for<br>
+              email savings and updates </ion-toggle>
+          </div>
+          <div class="form-row toggle-btn clearfix" data-toggle="buttons">
+            <ion-toggle ng-change="signup.showTermsPopup(myValue)" ng-click="signup.showTermsPopup(myValue);" ng-model="signupForm.textMsgSavings.checked"
+                            ng-checked="signupForm.textMsgSavings.checked" ng-init="signupForm.textMsgSavings.checked=false"> Sign up for text message <br>
+              savings and updates </ion-toggle>
+          </div>
+          <div class="form-row form-group phone_group" ng-if="signupForm.textMsgSavings.checked" id="id_phone_group">
+            <label class="pull-left col col-20 small">Mobile</label>
+            <div class="input-fields-group pull-right col col-75">
+              <input type="tel" custom autofocus ng-minlength="3" name="phone1" maxlength="3" size="3" required ng-pattern="/^[0-9]{3}$/" class="form-control input-small" ng-model="signupForm.phonebox1"/>
+              <input type="tel" custom ng-minlength="3" name="phone2" size="3" maxlength="3" required ng-pattern="/^[0-9]{3}$/" class="form-control input-small" ng-model="signupForm.phonebox2"/>
+              <input type="tel" custom ng-minlength="3" name="phone3" size="4" maxlength="4" required ng-pattern="/^[0-9]{4}$/" class="form-control input-medium" ng-model="signupForm.phonebox3"/>
+            </div>
+            <span id="id_zip_ok" class="form-control-feedback" ng-class="(myForm.phone1.$invalid || myForm.phone2.$invalid || myForm.phone3.$invalid) && (!myForm.phone1.$pristine || !myForm.phone2.$pristine || !myForm.phone3.$pristine) && 'icon-remove' || ((!myForm.phone1.$pristine || !myForm.phone2.$pristine || !myForm.phone3.$pristine)) && 'icon-ok'"></span> </div>
+        </div>
+        <div class="form-footer">
+          <div class="form-group">
+            <p> By pressing continue you agree to<br>
+              our <a href="javascript:void(0);" data-toggle="modal" ng-click="signup.fnPolicyPopup();">Terms and Privacy policy</a>. </p>
+          </div>
+          <div class="form-group">
+            <input type="submit"
+  ng-disabled="signupForm.userName.$dirty && signupForm.userName.$invalid || !signupForm.userName||
+  signupForm.email.$dirty && signupForm.email.$invalid || !signupForm.email || signupForm.zip.$dirty && signupForm.zip.$invalid || !signupForm.zip ||myForm.phone1.$invalid || myForm.phone2.$invalid || myForm.phone3.$invalid" id='id_btn_signup' class="btn btn-primary btn-lg btn-block"  ng-click="signup();" value='Continue'>
+          </div>
+        </div>
+        <div class="modal hide" id="id_privacybox"></div>
+      </form>
+    </section>
+  </ion-content>
+</ion-view>
