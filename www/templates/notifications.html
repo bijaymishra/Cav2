@@ -1,0 +1,32 @@
+<ion-view view-title="Notifications">
+    <ion-nav-buttons side="right">
+        <a class="button button-icon icon-finding mrgp20" href="#/app/quickIssue"></a>
+        <a class="button button-icon icon-home mrgp20" href="#/app/quickAction"></a>
+    </ion-nav-buttons>
+    <ion-content >
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+        <span class="fading-border"></span>
+        <div class="container text-center" style="padding-top: 30px;" ng-show="!displayMessage">
+            <!-- refer here for spinners: http://ionicframework.com/docs/api/directive/ionSpinner/ -->
+            <p class="spinner"><ion-spinner icon="{{spinner}}"></ion-spinner></p>
+            <p>{{loadingMessage}}</p>
+        </div>
+        <ion-list show-delete="false" class="ng-hide card notifications" ng-show="displayMessage && notifications.length" can-swipe="true">
+            <ion-item nav-clear ng-repeat="item in notifications track by item.id" ng-class-even="'even'" ng-class-odd="'odd'">
+                <div ng-bind="::item.message"></div>
+                <div class="item-date" ng-bind="::item.created"></div>
+                <ion-option-button class="button-assertive icon ion-trash-a" ng-click="delete(item, $index)"></ion-option-button>
+            </ion-item>
+            <ion-infinite-scroll distance="2"
+                 on-infinite="loadMoreData()"
+                 ng-if="moredata"  >
+         </ion-infinite-scroll>
+        </ion-list>
+        <div class="ng-hide center" ng-show="displayMessage && !notifications.length">
+            Currently there are no notifications
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar-subfooter">
+        <button class="button pull-right" ng-click="deleteAll()" ng-show="notifications.length >0">Delete All</button>
+    </ion-footer-bar>
+</ion-view>

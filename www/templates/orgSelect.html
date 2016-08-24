@@ -1,0 +1,12 @@
+<ion-modal-view>
+    
+    <div class="fixedModalHeader">
+    <button ng-click="logout()" class="modal-close"></button>
+    <h1 class="line">Select Organization</h1>
+    </div>
+    <ion-content>
+    <ion-list class="login-states">
+        <li ng-repeat="org in organizations" ng-class-even="'alt'"><a ng-click="selectOrg(org)">{{org.name}}</a></li>
+    </ion-list>
+    <!--<button class="button button-small" ng-click="logout()">Cancel</button>-->
+</ion-modal-view>

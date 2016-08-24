@@ -1,0 +1,13 @@
+<ion-modal-view>
+<header class="bar bar-header">
+	<div class="title">Auto Logout</div>
+	<button ng-click="autoLogoutClose()" class="modal-close"></button>
+</header>
+<ion-content class="has-header padding ">
+<label style="padding:20px;font-size:18px;">Due to inactivity system will automatically log out in  {{logoutCounter}} sec</label>
+<div class="padding">
+	<button class="button button-small" ng-click="autoLogoutClose()">Continue Session</button>
+	<button class="button button-small padding-left" ng-click="logout()">Logout</button>
+</div>
+</ion-content>
+</ion-modal-view>

@@ -1,0 +1,24 @@
+
+<ion-view>  
+    <header class="bar logo-header">
+        <img src="images/readypoint-logo.svg" alt="readypoint">
+    </header>
+    <ion-content class="v-align scrolloff loginContent">
+        <div class="container loginform">
+            <form name="loginForm" novalidate="novalidate">
+                <div class="list login-form">
+                    <label class="item item-input">
+                        <input type="text" placeholder="Email" ng-model="loginData.username" ng-trim="false">
+                    </label>
+                    <label class="item item-input">
+                        <input type="password" placeholder="Password" ng-model="loginData.password">
+                    </label>
+                    <button class="button button-large" focus="clicked" ng-click="doLogin(loginForm)">Log In</button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+    <footer class="bar bar-footer">
+        <div class="title">Copyright © 2015 ReadyPoint Health, Inc. All rights reserved.</div>
+    </footer>
+</ion-view>

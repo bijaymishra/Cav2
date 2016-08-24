@@ -1,0 +1,234 @@
+<ion-view view-title="Survey">
+    <ion-nav-buttons side="right">
+        <a class="button button-icon icon-finding mrgp20" href="#/app/quickIssue"></a>
+        <a class="button button-icon icon-home mrgp20" ng-href="#/app/quickAction"></a>
+    </ion-nav-buttons>
+    <ion-content class="survey-content" delegate-handle='survey-scroll'scroll-upward on-scroll="broadcastScroll()">
+        <div ion-affix data-affix-within-parent-with-class="survey-content">
+            <div ng-hide="movingUpwards && !staticHeader">
+            <div class="subheader" ng-click="hideTopBar()">
+               <div ng-click="hideTopBar()"> <h2 class="sub-title" ng-click="hideTopBar()">{{survey.checklist}} <span>{{survey.location}}</span></h2></div>
+            </div>
+            <div class="searchrow">
+                <div class="searchrow-sm">
+                    <div class="col_1">
+                        <label class="item item-input">
+                            <form name="surveyForm" novalidate="novalidate">
+                                <input return-close="true" type="search" placeholder="Search" ng-model="query.search" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }" />
+                            </form>
+                        </label>
+                    </div>
+                </div>
+                <div class="btnrow-sm">
+                    <div class="col_2">
+                    <button class="button button-block" ng-click="saveAsDraft()">Draft</button>
+                    </div>
+                    <div class="col_2">
+                    <button class="button button-block" ng-click="saveAsComplete()">Complete</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+    <!-- </ion-content> -->
+    
+        <!-- <form name="surveyForm" novalidate> -->
+                        <!-- Start Survey -->
+            <div class="survey-row top-bar" >
+                <div class="survey-bar-cell">
+                    <div class="left-col">
+                        <div class="small-col-c">C</div>
+                        <div class="small-col-nc">N/C</div>
+                        <div class="small-col-na">N/A</div>
+                    </div>
+                </div>
+                <div class="survey-bar-cell right-col question-heading">
+                    Question 
+                </div>
+            </div>
+             </div>
+            <!-- Start -->
+            <div class="container text-center" style="padding-top: 30px;" sly-show="!displayMessage">
+                <!-- refer here for spinners: http://ionicframework.com/docs/api/directive/ionSpinner/ -->
+                <p class="spinner"><ion-spinner icon="{{spinner}}"></ion-spinner></p>
+                <p>{{loadingMessage}}</p>
+            </div>
+            <ion-list delegate-handle='survey-scroll'>
+            <!-- <ion-scroll zooming="false" direction="y" ng-class="{height500: filteredQuestions.length>0, height0: filteredQuestions.length<=0}" delegate-handle='survey-scroll'> -->
+                <ion-item class="survey-row-content ng-hide" id="question{{item.id}}" sly-show="displayMessage && !item.hide" 
+                ng-repeat="item in __filteredQuestions" ng-class="{ isCurrent : item.isCurrent, 'alt': item.isOdd }">
+                <!-- ng-class="{'alt': item.isOdd}"  -->
+                    <!-- Start New Collapse -->
+                    <div class="radio-row hr-seperator">
+                        <div class="survey-bar-cell">
+                            <div class="left-col">
+                                <div class="small-col-c text-center green-text" ng-bind="item.compliant()"></div>
+                                <div class="small-col-nc text-center red-text" ng-bind="item.noncompliant()"></div>
+                                <div class="small-col-na text-center" ng-bind="item.notApplicable()"></div>
+                            </div>
+                        </div>
+                        <div class="survey-bar-cell middle-col question-text" scroll-on-click ng-click="selectQuestion(item);"> <!-- //scroll-on-click -->
+                            <p ng-bind-html="::item.name"></p>
+                        </div>
+                        <div class="survey-bar-cell three-dots-wrapper">
+                            <div class="right-col">
+                                <a href="javascript:void(0);" ng-hide="selectedOrg.isSubscribed && item.hasStandards"  class="survey-show-more" ng-click="showAdditionalInfo(item)"><i class="three-dots"></i></a>
+                                <a href="javascript:void(0);" ng-show="selectedOrg.isSubscribed && item.hasStandards" class="survey-show-link" ng-click="showAdditionalInfo(item)"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Start New Collapse -->
+                    <div class="survey-collapse" style="display:block;" ng-repeat="answer in item._answers" sly-show="(item.isCurrent && item.showAnswers ) || (item.isCurrent && $index === 0)" ng-click="selectAnswer(item, answer);" ng-class="{'editSec': $index}" >
+                        <div class="radio-row" sly-show="(item.isCurrent && item.showAnswers && answer.isEditable) || (item.isCurrent && $index === 0) ">
+                            <div class="survey-bar-cell" ng-show="(item.isCurrent && $index === 0)">
+                                <div class="radio-buttons">
+                                    <div class="styled-radio" ng-click="updateAnswer(answer,'C');">
+                                        <img class="icon" src="images/radiobutton-checked.png" ng-if="answer.compliant=='C'" />
+                                        <img class="icon" src="images/radiobutton.png" ng-if="answer.compliant !='C'" />                                        
+                                        <label for="yes-1" class="green-text">{{item.compliantAnswer}}</label>
+                                    </div>
+                                    <div class="styled-radio" ng-click="updateAnswer(answer,'NC'); ">
+                                        <img class="icon" src="images/radiobutton-checked.png" ng-if="answer.compliant=='NC'" />
+                                        <img class="icon" src="images/radiobutton.png" ng-if="answer.compliant !='NC'" />
+                                        <label for="no-1" class="red-text">{{item.compliantAnswer.toLowerCase() === "yes" ? "No" : "Yes"}}</label>
+                                    </div>
+                                    <div class="styled-radio" ng-click="updateAnswer(answer,'NA');">
+                                        <img class="icon" src="images/radiobutton-checked.png" ng-if="answer.compliant=='NA'" />
+                                        <img class="icon" src="images/radiobutton.png" ng-if="answer.compliant !='NA'" />
+                                        <label class="white-text" for="na-1">N/A</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ng-hide survey-bar-cell" ng-show="$index > 0">
+                                <span><b>#{{item._answers.length - $index}}: </b></span>
+                                <span ng-show="answer.compliant === 'NC'"> {{item.compliantAnswer.toLowerCase() === "yes" ? "No" : "Yes"}} (Non-Compliant) </span>
+                                <span ng-show="answer.compliant === 'C'"> {{item.compliantAnswer.toLowerCase() === "yes" ? "Yes" : "No" }} (Compliant) </span>
+                                <span ng-show="answer.compliant === 'NA'"> N/A (Not Applicable) </span>
+                            </div>
+                            <div class="survey-bar-cell job-type" sly-prevent-evaluation-when-hidden sly-show="item.isUniqueID=='Y' || item.isJobType=='Y' || answer.compliant == 'NC'">
+                                <label ng-if="item.isJobType=='Y'">Job Type</label>
+                                <label ng-if="item.isUniqueID=='Y'">Unique Id</label>
+                             
+                                <dropdown class="dropdown-width" ng-if="item.isJobType=='Y'" dropdown-model="answer.jobTypeID" dropdown-placeholder="'Select Job Type'">
+                                    <dropdown-item ng-repeat="jt in jobTypes | orderBy: 'name'" value="jt.id" label="jt.name">{{jt.name}}</dropdown-item>
+                                </dropdown>
+                                <input ng-if="item.isUniqueID=='Y'" type="text" ng-model="answer.uniqueID" />
+                                <div class="item item-checkbox item-checkbox-right resolved-btn" ng-if="answer.compliant == 'NC'">
+                                    <a ng-click="answer.issue.resolved = (answer.issue.resolved == 'N'? 'Y' : 'N'); ">
+                                        <label>Resolved</label> 
+                                        <img style="height: 33px; width: 36px; display: inline-block; margin: 0px;" class="icon" src="images/RP_CheckMark_white.svg" sly-show="answer.issue.resolved =='Y' && $index === 0">
+                                        <img style="height: 33px; width: 36px; display:inline-block;padding: 0 5px;" class="icon" src="images/RP_white_checkbox.svg" sly-show="answer.issue.resolved  =='N' && $index === 0" />
+                                         <img style="height: 33px; width: 36px; display: inline-block; margin: 0px;" class="icon" src="images/RP_CheckMark_navy.svg" sly-show="answer.issue.resolved =='Y' && $index > 0">
+                                        <img style="height: 33px; width: 36px; display:inline-block;padding: 0 5px;" class="icon" src="images/RP_white_checkbox.svg" sly-show="answer.issue.resolved  =='N' && $index > 0" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prevent-evaluation" sly-prevent-evaluation-when-hidden sly-show="$index > 0 && !answer.isEditable">
+                            <div>
+                                <span><b>#{{item._answers.length - $index}}: </b></span>
+                                <span ng-if="answer.compliant === 'NC'"> {{item.compliantAnswer.toLowerCase() === "yes" ? "No" : "Yes"}} (Non-Compliant) </span>
+                                <span ng-if="answer.compliant === 'C'"> {{item.compliantAnswer.toLowerCase() === "yes" ? "Yes" : "No" }} (Compliant) </span>
+                                <span ng-if="answer.compliant === 'NA'"> N/A (Not Applicable) </span>
+                                <span class="detailCol" ng-if="item.isJobType=='Y' && answer.jobTypeID"><b> Job Type:</b> {{jobTypeById(answer.jobTypeID)}}</span>
+                                <span class="detailCol" ng-if="item.isUniqueID=='Y' && answer.uniqueID"><b> Unique Id:</b> {{answer.uniqueID}}</span>
+                                <span ng-if="answer.compliant === 'NC'" class="detailCol"><b>Resolved:</b> {{answer.issue.resolved == 'N'? 'No' : 'Yes'}}</span>
+                                <span ng-if="answer.compliant === 'NC'" class="detailCol"><b>Photos:</b> {{ ((answer.issue.images.showImage0 && 1) || 0) + ((answer.issue.images.showImage1 && 1) || 0) + ((answer.issue.images.showImage2 && 1) || 0) }}</span>
+                                <span class="detailCol pull-right">Updated: {{answer.updated}}</span>
+                            </div>
+                            <div class="description" ng-if="answer.freeText" ><b>Description:</b> {{answer.freeText}}</div>
+                            <div class="actionPlan" ng-if="answer.compliant === 'NC' && answer.issue.actionPlan"><b>Action Plan:</b> {{answer.issue.actionPlan}}</div>
+                            <div class="btn-container">
+                                <button class="button button-small pull-right" ng-click="makeAnswerEditable(item, answer)">Edit</button>
+                                <button class="button button-small pull-right" ng-click="deleteAnswer(item, answer);">Delete</button>
+                            </div>
+                        </div>
+                        <div class="btn-wrap" sly-prevent-evaluation-when-hidden sly-show="$index === 0 && !answer.compliant">
+                            <button ng-show="item.answers.length - 1" class="ng-hide button button-small pull-right" ng-click="showHideAnswers(item)">{{item.showAnswers ? 'Hide' : 'Show'}} <span class='oval red'>{{item.answers.length - 1}}</span></button>
+                            <button ng-show="(item.answers.length - 1) && ($index > 0)" class="ng-hide button button-small pull-right" ng-click="addAnswer(item);$event.stopPropagation();">Save</button>
+                        </div>
+                        <div sly-prevent-evaluation-when-hidden class="survey-row-description" sly-show="($index === 0 && answer.isCurrent && answer.compliant) || (answer.isCurrent && !answer.isDummy && answer.isEditable)">
+                            <div class="description-row">
+                                <div class="description-row-left">Description <e class="red-text ng-hide" sly-show="(!answer.freeText.length && answer.compliant == 'NC' && answer.isCurrent && !answer.isDummy) || (!answer.freeText.length && answer.compliant == 'NC' && answer.isCurrent && answer.isDummy && answer.isValidated)">*</e> <span>{{400 - fullLength(answer.freeText)}}</span></div>
+                            </div>
+                            <div class="description-row">
+                                <div class="description-row-left">
+                                    <text-edit data="answer.freeText" ng-model="answer.freeText" maxlength="400" title="'Edit Description'"></text-edit>
+                                    <!-- <textarea name="description" ng-model="answer.freeText" placeholder="" maxlength="400" rows="5" ng-change="item.description = answer.freeText" ng-required="answer.isCurrent && answer.compliant == 'NC'"></textarea> -->
+                                </div>
+                                <div class="description-row-right">
+                                    <div class="description-row-right-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div sly-prevent-evaluation-when-hidden class="survey-row-description" sly-show="(($index === 0 && answer.isCurrent && answer.compliant) || (answer.isCurrent && !answer.isDummy && answer.isEditable)) && answer.compliant == 'NC'">
+                            <div class="description-row">
+                                <div class="description-row-left">Action Plan <span>{{400 - fullLength(answer.issue.actionPlan)}}</span></div>
+                                <div class="description-row-right">
+                                    <div class="description-row-right-content"></div>
+                                </div>
+                            </div>
+                            <div class="description-row">
+                                <div class="description-row-left">
+                                    <text-edit data="answer.issue.actionPlan" ng-model="answer.issue.actionPlan" ng-change="item.actionPlan = answer.issue.actionPlan" maxlength="400" title="'Edit Action'"></text-edit>
+                                    <!-- <textarea ng-model="answer.issue.actionPlan" maxlength="400" placeholder="" ng-change="item.actionPlan = answer.issue.actionPlan"></textarea> -->
+                                </div>
+                                <div class="description-row-right">
+                                    <div class="description-row-right-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div sly-prevent-evaluation-when-hidden class="survey-row-photos" sly-show="(($index === 0 && answer.isCurrent && answer.compliant) || (answer.isCurrent && !answer.isDummy && answer.isEditable)) && answer.compliant == 'NC'">
+                            <div class="photo-row-left">
+                                <div class="photo-title">Take a photo</div>
+                            </div>
+                            <div class="photo-row-right">
+                                <div class="row responsive-sm">
+                                    <div class="col">
+                                        <div class="camera-box-wrapper">
+                                            <button ng-click="showAS(answer, 0)" ng-class="{false:'button button-light button-camera',true:'button button-camera-blue'}[answer.issue.images.showImage0]">1<i ng-class="{false:'icon icon-camera',true:'icon icon-camera-white'}[answer.issue.images.showImage0]"></i></button>
+                                        </div>
+                                        <div class="photo-box" sly-show="answer.issue.images.showImage0">
+                                            <img square ng-src="{{answer.issue.images.imgURI0}}" ng-click="viewImages(answer, 0)" sly-show="answer.issue.images.showImage0">
+                                            <a class="button button-icon icon-remove" ng-click="removeImages(answer, 0)" sly-show="answer.issue.images.showImage0"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="camera-box-wrapper">
+                                            <button ng-click="showAS(answer, 1)" ng-class="{false:'button button-light button-camera',true:'button button-camera-blue'}[answer.issue.images.showImage1]">2<i ng-class="{false:'icon icon-camera',true:'icon icon-camera-white'}[answer.issue.images.showImage1]"></i></button>
+                                        </div>
+                                        <div class="photo-box" sly-show="answer.issue.images.showImage1">
+                                            <img square ng-src="{{answer.issue.images.imgURI1}}" ng-click="viewImages(answer, 1)" sly-show="answer.issue.images.showImage1">
+                                            <a class="button button-icon icon-remove" ng-click="removeImages(answer, 1)" sly-show="answer.issue.images.showImage1"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="camera-box-wrapper">
+                                            <button ng-click="showAS(answer, 2)" ng-class="{false:'button button-light button-camera',true:'button button-camera-blue'}[answer.issue.images.showImage2]">3<i ng-class="{false:'icon icon-camera',true:'icon icon-camera-white'}[answer.issue.images.showImage2]"></i></button>
+                                        </div>
+                                        <div class="photo-box" sly-show="answer.issue.images.showImage2">
+                                            <img square ng-src="{{answer.issue.images.imgURI2}}" ng-click="viewImages(answer, 2)" sly-show="answer.issue.images.showImage2">
+                                            <a class="button button-icon icon-remove" ng-click="removeImages(answer, 2)" sly-show="answer.issue.images.showImage2"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-wrap" sly-prevent-evaluation-when-hidden sly-show="answer.isEditable || ($index === 0 && answer.compliant)">
+                            <button class="button button-small" ng-click="revertAnswer(item, answer)">Cancel</button>
+                            <button class="button button-small" ng-click="addAnswer(item);$event.stopPropagation();">Save</button>
+                            <button class="button button-small ng-hide" ng-show="(item.answers.length - 1) && ($index === 0)" 
+                            ng-click="showHideAnswers(item)">{{item.showAnswers ? 'Hide' : 'Show'}} <span class='oval red'>{{item.answers.length - 1}}</span></button>
+                            <!-- <button class="button button-small pull-right" ng-click="deleteAnswer(item, answer);">Delete</button> -->
+                        </div>
+                    </div>
+                </ion-item>
+                
+            </ion-list>
+            <div sly-show="!visibleRecords && displayMessage" class="center ng-hide">No records found</div>
+        <!-- </form> -->
+        <ion-infinite-scroll distance="2%"
+             on-infinite="loadMoreData()"
+             ng-if="__filteredQuestions.length < __Questions.length"  >
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,37 @@
+<ion-side-menus >
+    <ion-side-menu-content edge-drag-threshold="true" drag-content="true">
+        <ion-nav-bar class="bar bar-header">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
+            <ion-nav-buttons side="left">
+                    <button class="button button-icon icon-menu" menu-toggle="left"></button>                
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent" style="padding-top:40px;"></ion-nav-view>
+        <ion-footer-bar class="bar bar-footer">
+          <span class="title">Copyright © 2015 ReadyPoint Health, Inc. All rights reserved.</span>
+      </ion-footer-bar>
+    </ion-side-menu-content>
+    <ion-side-menu side="left">
+       <ion-content>
+          <div class="menu-sidebar" style="padding-top:40px;">
+        <div class="menu-sidebar-logo">
+            <img src="images/readypoint-logo.svg" alt="readypoint">
+        </div>
+        <ul class="my-home-list">
+            <li><a href="#/app/quickSurvey" menu-toggle>Take a Quick Survey <span></span></a></li>
+            <li><a href="#/app/quickIssue" menu-toggle>Report a Finding <div class="oval"><div class="oval-character">F</div></div></a></li>
+            <li><a href="#/app/assignedSurvey" menu-toggle>Take an Assigned Survey <div class="oval red"><div class="oval-character">{{ resourcesCount['survey']}}</div></div></a></li>
+        </ul>
+        <ul class="my-profile-list">
+            <li><a href="javascript:void(0)">MyProfile</a></li>
+            <li><a href="javascript:void(0)" ng-click="toggleResetData()">{{selectedOrg.name}}<br>{{user.name}}</a></li>
+            <li ng-show="showResetData"><a href="javascript:void(0)" ng-click="synchronize()" menu-toggle >Reset Data <i class="icon-refresh"></i></a></li>
+            <li><a menu-toggle href="#/app/notifications">View Notifications <i class="icon-notify"><span>{{resourcesCount['notification']}}</span></i></a></li>
+            <li><a href="javascript:void(0)" ng-click="help()"  menu-toggle>Help</a></li>
+            <li><a href="javascript:void(0)" menu-toggle ng-click="logout()">Logout</a></li>
+        </ul>
+    </div>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

@@ -1,0 +1,15 @@
+<ion-view view-title="MyHome" >
+    <ion-nav-buttons side="right">
+        <a class="button button-icon icon-finding mrgp20" href="#/app/quickIssue"></a>
+        <a class="button button-icon icon-home mrgp20" href="#/app/quickAction"></a>
+    </ion-nav-buttons>
+    <ion-content class="v-align scrolloff">
+        <div class="container homecont">
+            <ul class="my-home-list">
+                <li><a href="#/app/quickSurvey">Take a Quick Survey <span></span></a></li>
+                <li><a href="#/app/quickIssue">Report a Finding <div class="oval"><div class="oval-character">F</div></div></a></li>
+                <li><a href="#/app/assignedSurvey">Take an Assigned Survey <div class="oval red"><div class="oval-character">{{ resourcesCount['survey']}}</div></div></a></li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

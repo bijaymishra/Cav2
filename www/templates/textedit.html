@@ -1,0 +1,18 @@
+<ion-modal-view class="text-modal has-header has-footer top0">
+    <ion-content class="textareaPopup" scroll="false">
+        <header class="bar bar-header">
+            <div class="title" ng-bind="title"></div>
+        </header>
+        <div class="popupTextareaContainer">
+         <div class="title textareatitle pull-left smallTitle" ng-bind="title"></div>
+         <div class="input-desc textCount pull-right">{{maxlength - fullLength1(datatemp)}} </div>
+         <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="marginLR clickFocus" focus="isVisible" ng-model="$parent.$parent.$parent.datatemp" maxlength='{{maxlength}}' rows="5"></textarea>
+        </div>
+        <ion-footer-bar align-title="left" keyboard-attach class="bar-assertive">
+            <div class="btnContainer">
+                <input class="button popupbtn pull-left" type="button" value="Cancel" ng-click="Cancel()">
+                <input class="button popupbtn pull-right" type="button" value="Save" ng-click="Save()">
+            </div>
+        </ion-footer-bar>
+    </ion-content>
+</ion-modal-view>

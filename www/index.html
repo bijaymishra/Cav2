@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+            <meta name="format-detection" content="telephone=no" />
+        <title></title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+        <!-- build:css dist_css/styles.css -->
+        <link href="css/ionic.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <!-- endbuild -->
+
+        <!-- build:js dist_js/lib.js -->
+        <script src="lib/custom-ionic/custom-ionic.bundle.js"></script>
+       <!-- <script src="lib/ionic/js/ionic.bundle.js"></script> -->
+        <script src="lib/ion-affix/ion-affix.js"></script>
+        <script src="lib/scalyr/scalyr.js"></script>
+        <script src="lib/moment/min/moment.min.js"></script>
+        <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+        <script src="lib/ionic-patch/angular-ios9-uiwebview.patch.v1.1.1.js"></script>
+        <script src="lib/jquery/dist/jquery.js"></script>
+        <script src="lib/aes.js"></script>
+        <script src="lib/pad-nopadding.js"></script>
+         <!-- endbuild -->
+        
+
+        <!-- build:js dist_js/app.js -->
+        <!-- your app's js -->
+        <script src="dist/dist_js/app/app.js"></script>
+        <script src="dist/dist_js/app/templates.js"></script>
+        <script src="dist/dist_js/app/config.js"></script>
+        <!-- Controller Start -->
+        <script src="dist/dist_js/app/controllers/app.js"></script>
+        <script src="dist/dist_js/app/controllers/loginController.js"></script>
+        <script src="dist/dist_js/app/controllers/appControllers.js"></script>
+        <script src="dist/dist_js/app/controllers/quickActionController.js"></script>
+        <script src="dist/dist_js/app/controllers/notificationController.js"></script>
+        <script src="dist/dist_js/app/controllers/assignedSurveyController.js"></script>
+        <script src="dist/dist_js/app/controllers/quickIssueController.js"></script>
+        <script src="dist/dist_js/app/controllers/quickSurveyController.js"></script>
+        <script src="dist/dist_js/app/controllers/surveyController.js"></script>
+        <script src="dist/dist_js/app/controllers/introController.js"></script>
+        <script src="dist/dist_js/app/controllers/synchronizeController.js"></script>
+        <!-- Controller End -->
+        <!-- Services Start -->
+        <script src="dist/dist_js/app/directives/dropDown.js"></script>
+        <script src="dist/dist_js/app/services/app.js"></script>
+        <script src="dist/dist_js/app/services/DB.js"></script>
+        <script src="dist/dist_js/app/services/Attachment.js"></script>
+        <script src="dist/dist_js/app/services/queryService.js"></script>
+        <script src="dist/dist_js/app/services/ActivityMonitor.js"></script>
+        <script src="dist/dist_js/app/services/Analytics.js"></script>
+        <script src="dist/dist_js/app/services/Timer.js"></script>
+        <script src="dist/dist_js/app/services/OrgResource.js"></script>
+        <script src="dist/dist_js/app/services/AppResource.js"></script>
+        <script src="dist/dist_js/app/services/UserResource.js"></script>
+        <script src="dist/dist_js/app/services/Queue.js"></script>
+        <script src="dist/dist_js/app/services/Survey.js"></script>
+        <script src="dist/dist_js/app/services/apiService.js"></script>
+        <script src="dist/dist_js/app/services/Synchronizer.js"></script>
+        <script src="dist/dist_js/app/services/QueueProcessorService.js"></script>
+        <script src="dist/dist_js/app/services/QueuingService.js"></script>
+        <script src="dist/dist_js/app/services/PostService.js"></script>
+        <script src="dist/dist_js/app/services/ErrorLog.js"></script>
+        <script src="dist/dist_js/app/services/templateService.js"></script>
+        <script src="dist/dist_js/app/services/ionicpopup.js"></script>
+        <!-- Services End -->
+        <!-- endbuild -->
+        
+        <!-- ionic/angularjs js -->
+
+    </head>
+    <body>
+        <ion-nav-view></ion-nav-view>
+        
+        <script type="text/javascript">
+        var debug = true;
+            if (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1) {
+                console.log("URL: Running in Cordova/PhoneGap");
+                document.addEventListener("deviceready", bootstrapAngular, false);
+            } else {
+                console.log("URL: Running in browser");
+                var analytics = window.analytics = window.analytics || {
+                    startTrackerWithId: function () {
+                        console.log('GA - Start Track With Id -');
+                        console.log(arguments);
+                    },
+                    setUserId: function () {
+                        console.log('GA - Set User Id -');
+                        console.log(arguments);
+                    },
+                    trackView: function () {
+                        console.log('GA - Track View -');
+                        console.log(arguments);
+                    },
+                    addCustomDimension: function () {
+                        console.log('GA - Add Custom Dimension -');
+                        console.log(arguments);
+                    },
+                    trackEvent: function () {
+                        console.log('GA - Track Event -');
+                        console.log(arguments);
+                    },
+                    trackException: function () {
+                        console.log('GA - Track Exception -');
+                        console.log(arguments);
+                    },
+                    trackTiming: function () {
+                        console.log('GA - Track Timings -');
+                        console.log(arguments);
+                    }
+                }
+                bootstrapAngular();
+            }
+        
+            function bootstrapAngular() {
+                var domElement = document.querySelector('body');
+                angular.bootstrap(domElement, ['healthApp'], { strictDi: true });
+            }
+        </script>
+        <script src="cordova.js"></script>
+    </body>
+</html>

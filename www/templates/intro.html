@@ -1,0 +1,48 @@
+<ion-view view-title="Intro" hide-back-button="true" cache-view="false" class="intro-slider">
+  <ion-nav-bar class="bar-light">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-nav-buttons side="left">
+        <button class="button button-positive button-clear no-animation pdtop23"
+        ng-click="leftButtonClick()">
+        {{leftButton}}
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button button-positive button-clear no-animation pdtop23"
+        ng-click="rightButtonClick()">
+        {{rightButton}}
+        </button>
+    </ion-nav-buttons>
+    <ion-slide-box on-slide-changed="slideIndex = index;">
+        <ion-slide>
+            <img ng-if="slideIndex >=0 && slideIndex <=1" src="images/0-Intro_9.25.15_Instructions.png">
+        </ion-slide>
+        <ion-slide>
+            <img ng-if="slideIndex >=0 && slideIndex <=2" src="images/1-Intro_9.25.15_LogIn.png">
+        </ion-slide>
+        <ion-slide>
+            <img ng-if="slideIndex >=1 && slideIndex <=3" src="images/2-Intro_9.25.15_MyHome.png">
+        </ion-slide>
+        <ion-slide>
+            <img ng-if="slideIndex >=2 && slideIndex <=4" src="images/3-Intro_9.25.15_MenuSideBar.png">
+        </ion-slide>
+        <ion-slide>
+            <img ng-if="slideIndex >=3 && slideIndex <=5" src="images/4-Intro_9.25.15_Survey.png">
+        </ion-slide>
+        <ion-slide>
+            <img ng-if="slideIndex >=4 && slideIndex <=6" src="images/5-Intro_9.25.15_Survey_layout.png">
+        </ion-slide>
+        <ion-slide>
+            <img ng-if="slideIndex >=5 && slideIndex <=7" src="images/6-Intro_9.25.15_Finding.png">
+        </ion-slide>
+        <ion-slide>
+            <img ng-if="slideIndex >=6 && slideIndex <=8" src="images/7-Intro_9.25.15_QuickSurvey.png">
+        </ion-slide>
+        <ion-slide>
+            <img ng-if="slideIndex >=7 && slideIndex <=9" src="images/8-Intro_9.25.15_Notifications.png">
+        </ion-slide>
+    </ion-slide-box>
+</ion-view>

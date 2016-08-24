@@ -1,0 +1,45 @@
+<ion-view view-title="Surveys">
+    <ion-nav-buttons side="right">
+        <a class="button button-icon icon-finding mrgp20" href="#/app/quickIssue"></a>
+        <a class="button button-icon icon-home mrgp20" href="#/app/quickAction"></a>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+        <div style="padding:0;" >
+            <div class="row row-top responsive-md padding">
+                <div class="col-80">
+                    <div class="list list-inset">
+                        <label class="item item-input">
+                            <form name="assignedSForm" novalidate="novalidate">
+                                <input return-close="true" type="search" ng-model="query.search" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" placeholder="Search">
+                            </form>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-20">
+                    <dropdown class="dropdown-assigned-survey" css-class="query.status === 'Open' ? 'open_color' : 'draft_color'" dropdown-model="query.status" dropdown-placeholder="'Open'">
+                        <dropdown-item ng-repeat="st in status" class="{{st.css}}" value="st.id" label="st.name">{{st.name}}</dropdown-item>
+                    </dropdown>
+                </div>
+            </div>
+            <!-- Start -->
+            <div class="container text-center" style="padding-top: 30px;" ng-show="!displayMessage">       
+                    <!-- refer here for spinners: http://ionicframework.com/docs/api/directive/ionSpinner/ -->
+                    <p class="spinner"><ion-spinner icon="{{spinner}}"></ion-spinner></p>
+                    <p>Loading...</p>
+            </div>
+            <ion-list class="card assigned-surveys ng-hide" ng-show="displayMessage">
+                <ion-item ng-repeat="item in filteredSurveys = (surveys | filter : searchFilterFunction | orderBy : 'dueDate' )" ng-class-even="'even item item-button-right'" ng-class-odd="'odd item item-button-right'" ng-href="#/app/survey/{{::item.surveyId}}" item-width="100%" item-height="105">
+                    <span ng-class="::{bluetext: item._status == 'Open', greentext: item._status == 'Draft'}" class="" ng-bind="::item.checklist"></span>
+                    <div class="item-location" ng-bind="::item.location"></div>
+                    <button class="button button-clear button-icon icon-right"></button>
+                    <div class="item-date" ng-bind="::item.dueDateDisplay"></div>
+                </ion-item>
+                <div ng-show="!filteredSurveys.length && surveys.length" class="center ng-hide">No records found</div>
+            </ion-list>
+            <div class="ng-hide center" ng-show="!surveys.length && displayMessage">
+                Currently there are no surveys assigned to you
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

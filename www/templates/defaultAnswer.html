@@ -1,0 +1,10 @@
+<ion-modal-view>
+    <button ng-click="defaultAnswerModal.hide()" class="modal-close"></button>
+    <h1 class="line">Select Default Answer</h1>
+    <ul class="login-states">
+        <li><a ng-click="selectDefaultAnswer('C')">Compliant</a></li>
+        <!--<li class="alt"><a ng-click="selectDefaultAnswer('NC')">Non Compliant</a></li>-->
+        <li class="alt"><a ng-click="selectDefaultAnswer('NA')">Not Applicable</a></li>
+        <li><a ng-click="selectDefaultAnswer('LU')">Leave Unanswered</a></li>
+    </ul>
+</ion-modal-view>

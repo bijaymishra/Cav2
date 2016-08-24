@@ -1,0 +1,132 @@
+<ion-view view-title="Report a Finding">
+<ion-nav-buttons side="right">
+<a class="button button-icon icon-home mrgp20" ng-href="#/app/quickAction"></a>
+</ion-nav-buttons>
+<ion-content on-scroll="broadcastScroll()">
+<div style="padding:0;">
+    <form name="quickIssueForm" novalidate>
+        <div class="list card finding">
+            <div class="item">
+                <div class="row row-center responsive-md">
+                    <div class="col-20">
+                        <label>Category</label>
+                        <label class="red-text ng-hide" ng-show="showRequired && !quickIssue.categoryID">*</label>
+                    </div>
+                    <div class="col-80 posstatic" >
+                        <dropdown dropdown-model="quickIssue.categoryID" dropdown-placeholder="'Select Category'">
+                        <dropdown-item ng-repeat="c in categories | orderBy: 'name'" value="c.id" label="c.name">{{c.name}}</dropdown-item>
+                        </dropdown>
+                    </div>
+                </div>
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="row row-center responsive-md">
+                    <div class="col-20">
+                        <label>Location</label>
+                        <label class="red-text ng-hide" ng-show="showRequired && !quickIssue.locationID">*</label>
+                    </div>
+                    <div class="col-80">
+                        <dropdown dropdown-model="quickIssue.locationID" dropdown-placeholder="'Select Location'">
+                        <dropdown-item ng-repeat="l in locations | orderBy: 'name'" value="l.id" label="l.name">{{l.name}}</dropdown-item>
+                        </dropdown>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="row row-center responsive-md">
+                    <div class="col-20 reportLabel">
+                        <label>Source</label>
+                    </div>
+                    <div class="col-80">
+                        <div class="input-desc pull-right">{{400 - fullLength(quickIssue.source)}} </div>
+                        <!--textarea name="source" ng-model="quickIssue.source" maxlength="400"></textarea-->
+                        <text-edit data="quickIssue.source" ng-model="quickIssue.source" maxlength="400" title="'Edit Source'"></text-edit>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="row row-center responsive-md DesRow">
+                    <div class="col-20 reportLabel">
+                        <label>Description</label>
+                        <label class="red-text ng-hide" ng-show="showRequired && quickIssue.description == ''">*</label>
+                    </div>
+                    <div class="col-80">
+                        <div class="item item-checkbox item-checkbox-right ResolvCheck">
+                            Resolved
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="quickIssue.resolved">
+                            </label>
+                        </div>
+                        <div class="input-desc pull-right">{{400 - fullLength(quickIssue.description)}} </div>
+                        <!-- <textarea name="description" required  maxlength="400" ng-model="quickIssue.description"></textarea> -->
+                        <text-edit data="quickIssue.description" ng-model="quickIssue.description" maxlength="400" required title="'Edit Description'"></text-edit>
+                    </div>
+                </div>
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="row row-center responsive-md">
+                    <div class="col-20 reportLabel">
+                        <label>Action Plan</label>
+                    </div>
+                    <div class="col-80">
+                        <div class="input-desc pull-right">{{400 - fullLength(quickIssue.actionPlan)}} </div>
+                        <!-- <textarea name="actionplan" maxlength="400" ng-model="quickIssue.actionPlan"></textarea> -->
+                        <text-edit data="quickIssue.actionPlan" ng-model="quickIssue.actionPlan" maxlength="400" title="'Edit Action Plan'"></text-edit>
+                    </div>
+                </div>
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="row row-center responsive-md">
+                    <div class="col-20">
+                        <label>Take a Photo</label>
+                    </div>
+                    <div class="col-80">
+                        <div class="row responsive-sm">
+                            <div class="col col-30">
+                                <div class="camera-box-wrapper">
+                                    <button ng-click="showAS(0)" ng-class="{false:'button button-light button-camera',true:'button button-camera-blue'}[quickIssue.showImage0]"><span>1</span><i ng-class="{false:'icon icon-camera',true:'icon icon-camera-white'}[quickIssue.showImage0]"></i></button>
+                                </div>
+                                <div class="photo-box ng-hide" ng-show="quickIssue.showImage0">
+                                    <img square ng-src="{{quickIssue.imgURI0}}" ng-click="viewImages(0)">
+                                    <a class="button button-icon icon-remove" ng-click="removeImages(0)" ng-show="quickIssue.showImage0"></a>
+                                </div>
+                            </div>
+                            <div class="col col-30">
+                                <div class="camera-box-wrapper">
+                                    <button ng-click="showAS(1)" ng-class="{false:'button button-light button-camera',true:'button button-camera-blue'}[quickIssue.showImage1]"><span>2</span><i ng-class="{false:'icon icon-camera',true:'icon icon-camera-white'}[quickIssue.showImage1]"></i></button>
+                                </div>
+                                <div class="photo-box ng-hide" ng-show="quickIssue.showImage1">
+                                    <img square ng-src="{{quickIssue.imgURI1}}" ng-click="viewImages(1)">
+                                    <a class="button button-icon icon-remove" ng-click="removeImages(1)" ng-show="quickIssue.showImage1"></a>
+                                </div>
+                            </div>
+                            <div class="col col-30">
+                                <div class="camera-box-wrapper">
+                                    <button ng-click="showAS(2)" ng-class="{false:'button button-light button-camera',true:'button button-camera-blue'}[quickIssue.showImage2]"><span>3</span><i ng-class="{false:'icon icon-camera',true:'icon icon-camera-white'}[quickIssue.showImage2]"></i></button>
+                                </div>
+                                <div class="photo-box ng-hide" ng-show="quickIssue.showImage2">
+                                    <img square ng-src="{{quickIssue.imgURI2}}" ng-click="viewImages(2)" >
+                                    <a class="button button-icon icon-remove" ng-click="removeImages(2)" ng-show="quickIssue.showImage2"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- item -->
+        </div>
+        <div class="padding">
+            <button class="button button-small" ng-disabled="!isModified" ng-click="cancel()">Cancel</button>
+            <button class="button button-small pull-right" ng-click="save(quickIssueForm)">Save</button>
+        </div>
+    </form>
+</div>
+</ion-content>
+</ion-view>

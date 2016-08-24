@@ -1,0 +1,51 @@
+<ion-modal-view class="add-info-modal" ng-class="{'mod-height':!selectedOrg.isSubscribed}">
+    
+    <header class="bar bar-header">    
+        <div class="title">More About This Question</div>
+        <button ng-click="closeAddiitonalInfo()" class="modal-close"></button>
+    </header>
+    
+    <ion-content class="has-header has-footer padding add-info1" delegate-handle='addInfo-scroll'  >
+        <p class="align-left"><strong>{{additionalInfoQuestion.name}}</strong></p>
+        <div class="list">
+            <div class="item item-input"><strong>Category:&nbsp;</strong>{{additionalInfoQuestion.category}}</div>
+            <div class="item item-input"><strong>Description:&nbsp;</strong>{{additionalInfoQuestion.description}}</div>
+            <div class="item item-input"><strong>Action Plan:&nbsp;</strong>{{additionalInfoQuestion.defaultActionPlan}}</div>
+        </div>
+        
+        <h1 class="small-modal-title line ng-hide" ng-show="selectedOrg.isSubscribed" ion-affix data-affix-within-parent-with-class="add-info1">Linked Standards</h1>
+        <div ng-repeat="item in additionalInfoData" ng-show="selectedOrg.isSubscribed" class="ng-hide">
+            <p class="link-standards-main link-standards-main-title"><strong>{{item.externalDisplayID}} - {{item.name}}</strong></p>
+            <div ng-repeat="subItem in item.subItems">
+                <p class="link-standards-main link-standards-secondary-title"><strong>{{subItem.externalDisplayID}}</strong> - {{subItem.name}}</p>
+                <div ng-repeat="subSubItem in subItem.subItems">
+                    <p class="link-standards-sub preserve"><strong>{{subSubItem.externalDisplayID}}</strong> - {{subSubItem.name}}</p>
+                    <div class="additional-info-bar">
+                        <span class="col-25">FSA</span> 
+                        <span class="col-14">MOS</span> 
+                        <span class="col-14">CR</span> 
+                        <span class="col-14">DOC</span> 
+                        <span class="col-14">SC</span> 
+                        <span class="col-14">ESP</span>
+                    </div>
+                    <div class="additional-info-bar bg-white">
+                        <span class="col-25">{{subSubItem.extraInfo.fsa}}</span> 
+                        <span class="col-14">{{subSubItem.extraInfo.mos}}</span> 
+                        <span class="col-14">{{subSubItem.extraInfo.cr}}</span> 
+                        <span class="col-14">{{subSubItem.extraInfo.doc}}</span> 
+                        <span class="col-14">{{subSubItem.extraInfo.sc}}</span> 
+                        <span class="col-14">{{subSubItem.extraInfo.esp}}</span>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div ng-show="!(additionalInfoData.length || !isOnline) && selectedOrg.isSubscribed" class="center ng-hide">There are no Standards linked to this Question</div>
+        <div ng-hide="isOnline">{{wifiError}}</div>
+        <div ng-hide="isOffline">{{linkedStnd}}</div>
+    </ion-content>      
+    
+    <ion-footer-bar class="bar bar-footer modal-footer ng-hide" ng-show="additionalInfoData.length">
+        <div class="title">© 2015 The Joint commission. Version effective September, 2015. Displayed under license.</div>
+    </ion-footer-bar>
+    
+</ion-modal-view>

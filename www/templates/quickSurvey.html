@@ -1,0 +1,45 @@
+<ion-view view-title="Quick Survey">
+    <ion-nav-buttons side="right">
+        <a class="button button-icon icon-finding mrgp20" href="#/app/quickIssue"></a>
+        <a class="button button-icon icon-home mrgp20" href="#/app/quickAction"></a>
+    </ion-nav-buttons>
+    <ion-content>
+        <div style="padding:0;">
+            <form name="quickSurveyForm" novalidate>
+                <div class="list card finding quick-survey">
+                    <!-- item -->
+                    <div class="item">
+                        <div class="row row-center responsive-md">
+                            <div class="col-10">
+                                <label>Checklist</label>
+                                <label class="red-text ng-hide" ng-show="showRequired && !survey.checklistID">*</label>
+                            </div>
+                            <div class="col-90">
+                                <dropdown dropdown-model="survey.checklistID" class="custom-select" dropdown-placeholder="survey.checklistLabel">
+                                    <dropdown-item ng-repeat="c in checklists | orderBy: 'name'" value="c.id" label="c.name">{{c.name}}</dropdown-item>
+                                </dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="row row-center responsive-md">
+                            <div class="col-10">
+                                <label>Location</label>
+                                <label class="red-text ng-hide" ng-show="showRequired && !survey.locationID">*</label>
+                            </div>
+                            <div class="col-90">
+                                <dropdown dropdown-model="survey.locationID" class="custom-select" dropdown-placeholder="survey.locationLabel">
+                                    <dropdown-item ng-repeat="loc in locations | orderBy: 'name'" value="loc.id" label="loc.name">{{loc.name}}</dropdown-item>
+                                </dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding">
+                        <button class="button button-small" ng-click="clear()">Cancel</button>
+                        <button class="button button-small pull-right" ng-click="start(quickSurveyForm)">Start</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>
